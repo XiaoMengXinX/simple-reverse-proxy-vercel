@@ -10,7 +10,7 @@ var URLtoProxy = os.Getenv("URL_TO_PROXY")
 
 func ProxyHandler(w http.ResponseWriter, r *http.Request) {
 	client := &http.Client{}
-	req, err := http.NewRequest(r.Method, URLtoProxy+"/"+r.RequestURI, r.Body)
+	req, err := http.NewRequest(r.Method, URLtoProxy+r.RequestURI, r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
