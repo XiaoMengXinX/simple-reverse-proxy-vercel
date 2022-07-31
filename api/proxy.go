@@ -2,7 +2,6 @@ package api
 
 import (
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 )
@@ -13,12 +12,8 @@ func ProxyHandler(w http.ResponseWriter, r *http.Request) {
 	client := &http.Client{}
 	var url = URLtoProxy + r.URL.Path
 	if len(r.URL.RawQuery) > 0 {
-		url += "?"
+		url += "?" + r.URL.RawQuery
 	}
-	for k, v := range r.URL.Query() {
-		url += "&" + k + "=" + v[0]
-	}
-	log.Println(url)
 	req, err := http.NewRequest(r.Method, URLtoProxy+r.URL.Path, r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
